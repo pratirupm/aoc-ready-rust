@@ -48,7 +48,7 @@ The book contains 143 Rust fences. They were audited page by page:
 $ bun run check      # Astro 0 errors; snippets 0 problems; prose 0 errors, 0 warnings
 $ bun run stats      # 27 pages, 43,490 words, 0 outside 1,200–4,000
 $ bun run build      # 28 pages, 69 links prefixed, 8 tables wrapped
-$ bun run links      # all 1,172 internal links resolve
+$ bun run links      # all 1,200 internal links resolve
 ```
 
 ## Design and accessibility
@@ -64,6 +64,7 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 - The landing content shares the 46rem measure; the fourth card is a real link to the field guide.
 - “Start here” and “Ground floor” start collapsed, so the Field guide header is above the fold on chapter pages.
 - Mobile tabs wrap instead of clipping; menu, search, copy, and tab targets are at least 44px.
+- A tiny `public/a11y.js` adds `aria-expanded`/`aria-controls` to the mobile drawer toggle and names the Pagefind dialog “Search”.
 - A `prefers-reduced-motion` guard is in place.
 
 ## Deployment
@@ -78,7 +79,7 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 
 - **Zed's GUI itself.** The Flatpak launches and its CLI, settings path, sandboxed Cargo, tasks, and rust-analyzer toolchain were verified. Opening a window, clicking tasks, and reading diagnostics were not automated.
 - **The full Git workflow.** Git commands were syntax-checked, and the first-commit sequence was reproduced in an isolated scratch repository. No real commit was made in a reader's copy during the audit.
-- **Every page and interaction.** Four representative pages were rendered at both widths and themes. The production search dialog (Pagefind) was not automated; a click-through of all 27 pages and keyboard-only navigation was not exhaustive.
+- **Every page and interaction.** Four representative pages were rendered at both widths and themes. The production Pagefind search returned five results for “Dijkstra” and Escape closed it. A click-through of all 27 pages and keyboard-only navigation was not exhaustive.
 - **External links, checked once.** All 28 external URLs returned 200 on 2026-11-23. They can change later.
 - **A custom domain.** GitHub Pages provides the URL above; no CNAME is configured.
 
