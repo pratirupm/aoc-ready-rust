@@ -12,6 +12,7 @@ Build and check with:
 ```
 bun run build
 bun run check
+bun run snippets
 bun run lint
 bun run stats
 bun run links

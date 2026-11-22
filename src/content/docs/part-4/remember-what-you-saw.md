@@ -187,7 +187,7 @@ Now add a second table, `ways`, where `ways[index]` counts the shortest paths fr
 
 ```rust title="rust-aoc-lab/src/bin/drill07.rs"
 let mut ways = vec![0u64; grid.cells.len()];
-ways[start] = 1;
+ways[*start] = 1;
 
 let mut order: Vec<usize> = (0..grid.cells.len())
     .filter(|&index| dist[index] != usize::MAX)
@@ -203,7 +203,7 @@ for index in order {
 }
 ```
 
-`order` collects the reachable cells and sorts them by distance. For each cell, the inner loop looks for neighbours exactly one step farther from the start. Every shortest path to `index` can gain one more step and become a shortest path to such a neighbour, so the count at `index` is added to it. The function returns `ways[exit]`.
+`order` collects the reachable cells and sorts them by distance. For each cell, the inner loop looks for neighbours exactly one step farther from the start. Every shortest path to `index` can gain one more step and become a shortest path to such a neighbour, so the count at `index` is added to it. The function returns the count stored for the exit cell.
 
 The distance test is what keeps the count honest. A neighbour at the same distance would make a loop, and a neighbour two steps away would not be part of a shortest path. Only a connection that climbs by exactly one belongs.
 

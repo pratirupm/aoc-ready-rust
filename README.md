@@ -19,6 +19,7 @@ The site runs at `http://localhost:4321`.
 
 ```console
 $ bun run check
+$ bun run snippets
 $ bun run lint
 $ bun run stats
 $ bun run build

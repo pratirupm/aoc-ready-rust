@@ -11,12 +11,12 @@ This book does not reproduce puzzle text, personal puzzle inputs, or puzzle answ
 
 Every Rust example that claims to run was run. The lab passes `cargo test`, `cargo fmt`, and `cargo clippy --all-targets -- -D warnings` on Rust 1.99.1. The command output quoted in the chapters comes from those runs; timings, paths, and commit hashes differ on your machine.
 
-The site passes `bun run check`, `bun run lint`, `bun run stats`, `bun run build`, and `bun run links`. The prose linter is strict about vocabulary, code-block length, and invented output, which is why some sentences read the way they do. The word-count check keeps the seven day pages within a readable range.
+The site passes `bun run check`, `bun run lint`, `bun run stats`, `bun run build`, and `bun run links`. The prose linter is strict about vocabulary, code-block length, and tone, which is why some sentences read the way they do. The word-count report flags any part page outside a readable range.
 
 ## Where the puzzles live
 
 - [Advent of Code 2026](https://adventofcode.com/2026)
-- [The 2025 about page](https://adventofcode.com/2025/about), which explains the twelve-day format and the end of the global leaderboard
+- [The 2025 about page](https://adventofcode.com/2025/about), which explains the shorter 2025 format and the end of the global leaderboard
 - [The Rust Book](https://doc.rust-lang.org/book/)
 - [The Rust standard library](https://doc.rust-lang.org/std/)
 

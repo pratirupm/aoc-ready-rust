@@ -198,7 +198,7 @@ The files now sit under "Changes to be committed". `git commit` turns that list 
 ```console
 $ git commit -m "Add the first passing test"
 [main (root-commit) d3b2983] Add the first passing test
- 4 files changed, 25 insertions(+)
+ 4 files changed, 41 insertions(+)
  create mode 100644 .gitignore
  create mode 100644 Cargo.lock
  create mode 100644 Cargo.toml

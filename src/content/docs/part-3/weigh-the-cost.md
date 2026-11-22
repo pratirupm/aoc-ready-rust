@@ -81,14 +81,14 @@ Why is the first good offer for a cell final? Every price is zero or more. If a 
 let mut dist = vec![u64::MAX; grid.cells.len()];
 let mut heap = BinaryHeap::new();
 
-dist[start] = 0;
-heap.push(Reverse((0u64, start)));
+dist[*start] = 0;
+heap.push(Reverse((0u64, *start)));
 
 while let Some(Reverse((cost, index))) = heap.pop() {
     if cost > dist[index] {
         continue;
     }
-    if index == exit {
+    if index == *exit {
         return cost;
     }
     ...
@@ -146,8 +146,8 @@ let mut dist = vec![vec![u64::MAX; cells]; 5];
 let mut heap = BinaryHeap::new();
 
 // Direction 4 means "no direction yet".
-dist[4][start] = 0;
-heap.push(Reverse((0u64, start, 4usize)));
+dist[4][*start] = 0;
+heap.push(Reverse((0u64, *start, 4usize)));
 
 ...
 let turn = if direction != 4 && direction != next_direction {
@@ -246,7 +246,7 @@ heap.push(Reverse((priority, cost, next)));
 
 The heap now sorts by `priority`, while the board still stores `cost`. Ties fall to the smaller `cost`, so the order is repeatable; a heuristic tie-break, one that uses an estimate of the distance left, is a separate choice. A guess that overstates the distance can make A* return a route that is not the cheapest, so the estimate has to stay optimistic.
 
-`Reverse` is enough for today, but a heap can also be given a custom order. That needs a type with its own comparison routine, written with `impl Ord`; `Ord` is a trait, a rulebook that says how values of a type are compared. The routine can compare `other.cost` with `self.cost` to turn a max-heap into a min-heap. Traits and generic types arrive later in the book. Until then, the wrapper is shorter and harder to get wrong.
+`Reverse` is enough for today, but a heap can also be given a custom order. That needs a type with its own comparison routine, written with `impl Ord`; `Ord` is a trait, a rulebook that says how values of a type are compared. The routine can compare `other.cost` with `self.cost` to turn a max-heap into a min-heap. Traits and generic types are outside this ramp; the glossary gives the short version, and the standard library docs go further. Until then, the wrapper is shorter and harder to get wrong.
 
 Tie-breaking is a choice, not a correctness issue. Many cells can share a cost. Ordering equal offers by cell index, as the tuple does, makes a run repeatable; ordering them by the A* estimate usually explores fewer cells. Either way the cheapest total is the same, and only the order of work changes.
 

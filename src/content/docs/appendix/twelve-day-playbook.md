@@ -16,9 +16,10 @@ Make a new project beside the lab. A Rust project is called a crate, and `cargo 
 ```console
 $ cargo new aoc2026 --vcs none
     Creating binary (application) `aoc2026` package
+note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 ```
 
-Move into the folder with `cd aoc2026` before running anything else. A crate can hold several programs. A file in `src/bin/` becomes its own binary, named after the file, so `src/bin/day01.rs` builds `day01`. Make one file for each day, from `day01.rs` through `day12.rs`. The folder looks like this when the setup is done:
+Move into the folder with `cd aoc2026` before running anything else. A crate can hold several programs. `src/main.rs` is the small program Cargo wrote, and it can stay. A file in `src/bin/` becomes its own binary, named after the file, so `src/bin/day01.rs` builds `day01`. Make one file for each day, from `day01.rs` through `day12.rs`. The folder looks like this when the setup is done:
 
 ```text
 aoc2026/
@@ -29,11 +30,14 @@ aoc2026/
 │   │   └── day01.txt
 │   └── inputs/
 └── src/
+    ├── main.rs
     └── bin/
         ├── day01.rs
         ├── day02.rs
         └── ...
 ```
+
+`--vcs none` left Git alone. Before the first commit, run `git init` in the project folder; Git prints the path to the hidden `.git` folder.
 
 `data/examples/` holds the small example from each puzzle page. Those examples are safe to keep in Git because you type them yourself. `data/inputs/` holds the personal input file that the site gives your account. Inputs do not belong in a shared project, so Git ignores that folder.
 
@@ -50,7 +54,7 @@ edition = "2024"
 
 `edition` names the version of Rust the code is written for, and `2024` is current. `[dependencies]` lists outside libraries; leave it empty. The standard library has what the puzzles need, and no dependency means no version problem on a puzzle morning.
 
-The ignore file has two lines:
+Create `.gitignore` beside `Cargo.toml` with two lines:
 
 ```text title=".gitignore"
 /target
@@ -154,7 +158,7 @@ A hint from a person is different from a finished solution. Ask what they would 
 
 The global leaderboard is gone. After ten years it had become a source of stress for the event and its users, so it was removed. The private leaderboard remains: a small board you share with friends, a class, or a group at work. Its owner sets the rules.
 
-Midnight on the east coast of the United States is the middle of the night in Europe and the working day in Asia. The puzzle stays unlocked, so solve in the morning if that suits you. Sleep matters more than a midnight start.
+Midnight on the east coast of the United States is the early morning in Europe and the working day in Asia. The puzzle stays unlocked, so solve in the morning if that suits you. Sleep matters more than a midnight start.
 
 Twelve days is a rhythm, not a sprint. Some days take an evening; some take a walk and a second evening. The puzzles remain available after December, so there is no penalty for finishing late.
 

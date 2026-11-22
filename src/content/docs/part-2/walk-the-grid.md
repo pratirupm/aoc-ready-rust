@@ -76,14 +76,16 @@ A flood fill asks a smaller question than BFS: which cells can be reached at all
 The drill's first part counts the reachable non-wall cells, leaving out the start itself. Inside `part1`, the search is the same call, and the counting is a pass over the result:
 
 ```rust title="src/bin/drill02.rs"
-let dist = distances(grid, start);
+let dist = distances(grid, *start);
 dist.iter()
     .enumerate()
-    .filter(|&(index, &steps)| index != start && steps != usize::MAX)
+    .filter(|&(index, &steps)| index != *start && steps != usize::MAX)
     .count() as u64
 ```
 
 `enumerate()` pairs each entry with its position, so the closure receives `(index, &steps)`. The pattern `|&(index, &steps)|` unpacks that pair and copies both numbers out. The filter keeps a cell only when it is not the start and its distance is not the marker. `count()` adds one per kept cell.
+
+`start` is borrowed from the destructured input, so it is a `&usize`; `*start` reads the number it points at. The ground floor's `*cell` example uses the same mark.
 
 The result is the size of the connected region around the start, minus the start. Walls split the map into separate regions; a cell in another region keeps the marker and never enters the count.
 
@@ -205,7 +207,7 @@ Open `data/examples/02.txt`. It is a maze with a start, an exit, walls, and floo
 #########
 #S..#...#
 #.#.#.#.#
-#...#...#
+#.#...#.#
 #.#####.#
 #.......#
 ####E####
@@ -214,7 +216,9 @@ Open `data/examples/02.txt`. It is a maze with a start, an exit, walls, and floo
 `S` is the start, `E` is the exit, `#` is a wall, and `.` is open floor. Both `S` and `E` are walkable. `Grid::parse` keeps every line as a row, and `parse` finds the two special cells with `find`:
 
 ```rust title="src/bin/drill02.rs"
-pub fn parse(input: &str) -> (Grid, usize, usize) {
+pub type Input = (Grid, usize, usize);
+
+pub fn parse(input: &str) -> Input {
     let grid = Grid::parse(input);
     let start = grid.find(b'S').expect("a start cell");
     let exit = grid.find(b'E').expect("an exit cell");
@@ -222,7 +226,7 @@ pub fn parse(input: &str) -> (Grid, usize, usize) {
 }
 ```
 
-The return type is a tuple, a fixed group of values in parentheses, holding three things: the grid, the flat index of `S`, and the flat index of `E`. `find` returns an `Option`, and `expect` unwraps it with a message that says what was missing. Flat indices are used instead of row and column pairs because the distance array is indexed the same way.
+The return type is a tuple, a fixed group of values in parentheses, holding three things: the grid, the flat index of `S`, and the flat index of `E`. `Input` is a type alias for that tuple, so the function signature stays short and both parts can name the same type. `find` returns an `Option`, and `expect` unwraps it with a message that says what was missing. Flat indices are used instead of row and column pairs because the distance array is indexed the same way.
 
 Part 1 runs BFS from `S` and counts the reachable cells that are not the start and not the marker. `E` is reachable, so it counts as an ordinary cell here. Part 2 runs the same search and reads the distance at the exit; if the exit is walled off, the marker survives and the part returns zero.
 

@@ -3,7 +3,7 @@ title: "Cheat sheet"
 description: "Short, tested snippets for parsing, grids, search, DP, and modular arithmetic."
 ---
 
-The snippets here are the working core of the lab, trimmed to the part you reach for on a puzzle morning. Each one names the file it comes from. The full version, with tests and comments, lives in `rust-aoc-lab/src/`, and you can copy it into your own project.
+The snippets here are the working core of the lab, trimmed to the part you reach for on a puzzle morning. The title above a block names the file whose shape it shows. The lab versions, with tests and comments, live in `rust-aoc-lab/src/`, and you can copy them into your own project.
 
 The snippets assume the lab's imports, such as `use rust_aoc_lab::grid::Grid;`. When you copy one into a new project, copy its import line too.
 
@@ -26,7 +26,7 @@ fn main() {
 
 `parse::blocks` splits on blank lines, and `parse::unsigned` pulls every unsigned integer out of the text in order. A minus sign is treated as a separator, not a sign.
 
-```rust title="src/parse.rs"
+```rust title="src/bin/day01.rs"
 use rust_aoc_lab::parse;
 
 let text = "one\n\n12, 345\n";
@@ -40,7 +40,7 @@ Both functions return a `Vec`, so you can index the result or loop over it. Use 
 
 A range written `10-20` is two numbers and a separator. `split_once` cuts at the first `-` and gives you the two pieces as an `Option`, which `unwrap` turns into a pair.
 
-```rust title="src/bin/drill06.rs"
+```rust title="src/bin/day06.rs"
 let (start, end) = line.split_once('-').unwrap();
 let interval: (i64, i64) = (start.parse().unwrap(), end.parse().unwrap());
 ```
@@ -120,16 +120,19 @@ The queue visits cells in rings, so the first time a cell is reached is the shor
 
 Dijkstra replaces the queue with a min-heap. `Reverse` turns the max-heap into a min-heap, and the `(cost, index)` pair orders by cost first. The `cost > dist[index]` check discards stale entries without deleting them, which is the lazy-deletion trick.
 
+Inside `part1`:
+
 ```rust title="src/bin/drill03.rs"
 use std::cmp::Reverse;
 use std::collections::BinaryHeap;
 
 use rust_aoc_lab::grid::Grid;
 
+let (grid, start, exit) = input;
 let mut dist = vec![u64::MAX; grid.cells.len()];
 let mut heap = BinaryHeap::new();
-dist[start] = 0;
-heap.push(Reverse((0u64, start)));
+dist[*start] = 0;
+heap.push(Reverse((0u64, *start)));
 
 while let Some(Reverse((cost, index))) = heap.pop() {
     if cost > dist[index] {
@@ -180,9 +183,11 @@ The table is a `Vec` because the states are small integers from `0` to the targe
 
 Counting shortest paths uses the distance table and then a second table of counts. Sorting the reached cells by distance puts every contributor before the cell that needs it.
 
+Inside `part2`, after the distance table exists:
+
 ```rust title="src/bin/drill07.rs"
 let mut ways = vec![0u64; grid.cells.len()];
-ways[start] = 1;
+ways[*start] = 1;
 
 let mut order: Vec<usize> = (0..grid.cells.len())
     .filter(|&index| dist[index] != usize::MAX)
@@ -197,10 +202,10 @@ for index in order {
     }
 }
 
-ways[exit]
+ways[*exit]
 ```
 
-`ways[start]` begins at one because there is one empty walk at the start; each open edge one ring forward adds the count behind it. The modulo keeps the count inside a `u64`; the puzzle states when it wants a remainder.
+The count at the start cell begins at one because there is one empty walk at the start; each open edge one ring forward adds the count behind it. The modulo keeps the count inside a `u64`; the puzzle states when it wants a remainder.
 
 ## Groups, ranges, and numbers
 

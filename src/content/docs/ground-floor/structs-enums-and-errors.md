@@ -207,12 +207,12 @@ Add the missing field and build again. The carets point at the struct name, and 
 $ cargo build
 ...
 error[E0599]: no variant, associated function, or constant named `Up` found for enum `Direction` in the current scope
- --> src/main.rs:7:24
+ --> src/main.rs:8:24
   |
 1 | enum Direction {
   | -------------- variant, associated function, or constant `Up` not found for this enum
 ...
-7 |     let d = Direction::Up;
+8 |     let d = Direction::Up;
   |                        ^^ variant, associated function, or constant not found in `Direction`
 ...
 ```

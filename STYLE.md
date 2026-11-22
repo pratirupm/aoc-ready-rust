@@ -153,8 +153,9 @@ Use at most a handful per page. If everything is highlighted, nothing is.
 ```
 bun run dev          # local site
 bun run build        # production build
+bun run snippets     # titled code excerpts must match the lab
 bun run lint         # prose rules
 bun run stats        # prose word counts
 bun run links        # internal links in the built site
-bun run check        # Astro check and prose lint
+bun run check        # Astro check, snippets, and prose lint
 ```

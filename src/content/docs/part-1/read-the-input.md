@@ -37,7 +37,7 @@ A `Vec<u8>` is a growable list of bytes: `let cells: Vec<u8> = vec![b'.', b'#'];
 
 Every drill in the lab answers the same three questions in the same order. How do I read this input? What is the first answer? What is the second? The names never change:
 
-```rust title="src/bin/drill01.rs"
+```rust
 pub fn parse(input: &str) -> Grid
 pub fn part1(grid: &Grid) -> u64
 pub fn part2(grid: &Grid) -> u64

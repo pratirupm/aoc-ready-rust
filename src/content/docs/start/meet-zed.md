@@ -27,7 +27,7 @@ The **project panel** sits on the left. It lists folders and files. A small tria
 
 The **editor** fills the middle. Each open file gets a tab at the top, and the tab shows a dot when the file has unsaved changes. This is where you type. Line numbers run down the left edge, and the current line is highlighted.
 
-The **terminal panel** sits at the bottom, hidden until you ask for it. It runs the same commands you would type in a separate terminal window. Open it with `terminal: toggle` from the command palette. Output from tasks appears here as well.
+The **terminal panel** sits at the bottom, hidden until you ask for it. It runs the same commands you would type in a separate terminal window. Open it with `terminal panel: toggle` from the command palette. Output from tasks appears here as well.
 
 The **Git panel** shares the left side with the project panel. Git is the tool that records snapshots of your files, and each snapshot is called a commit. The panel lists the files that changed since the last snapshot and lets you read the differences. We cover it at the end of this tour.
 
@@ -82,7 +82,7 @@ The command rewrites files in place and prints nothing when it succeeds. Run it 
 
 ## The Git panel at a glance
 
-Open the Git panel from the command palette with `git: open git panel`. The panel lists every file that differs from the last snapshot. A mark beside a name tells you whether the file is modified or new.
+Open the Git panel from the command palette with `git panel: toggle focus`. The panel lists every file that differs from the last snapshot. A mark beside a name tells you whether the file is modified or new.
 
 Click a changed file and the editor shows the file with removed lines marked in red and added lines in green. Thin colored bars in the gutter show where the changes sit in the full file. You do not need to understand every mark today. The panel answers one question: what changed since the last save point?
 

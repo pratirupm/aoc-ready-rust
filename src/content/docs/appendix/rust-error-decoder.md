@@ -1,29 +1,34 @@
 ---
 title: "Rust error decoder"
-description: "Fourteen real compiler messages, what they mean, and the smallest change that fixes them."
+description: "Fourteen real Rust error and panic messages, what they mean, and the smallest change that fixes them."
 ---
 
 Rust's compiler is talkative. A first program can produce a screen of text for one missing word, and the temptation is to read the whole screen as a verdict. It is closer to a set of directions: here is the line, here is the column, here is what the compiler expected, and here is a suggestion.
 
-This page decodes fourteen messages that a beginner meets while building a puzzle project. Each entry shows the real first line, the arrow, the caret, and the important help or note. The file names and line numbers come from small scratch programs, so yours will differ. The words around the code are the part that transfers.
+This page decodes fourteen messages that a beginner meets while building a puzzle project. Each entry shows the code that triggers the message and the first line to read. The transcript below shows how the arrow, the caret, and the help fit together. The file names and line numbers come from small scratch programs, so yours will differ. The words around the code are the part that transfers.
 
 Read the first error first. A pile of errors often comes from one mistake: a missing `let` makes every later use of the name fail, and a bad type makes every call that touches it complain. Fix the first message, run the compiler again, and watch the pile shrink. The rest of this page follows that habit.
 
 ## How to read a Rust error
 
-Here is a complete message for a moved `String`:
+Here is a real message for a moved `String`:
 
 ```console
 $ rustc e01.rs
 error[E0382]: borrow of moved value: `first`
  --> e01.rs:4:16
   |
+2 |     let first = String::from("day one");
+  |         ----- move occurs because `first` has type `String`, which does not implement the `Copy` trait
 3 |     let second = first;
   |                  ----- value moved here
 4 |     println!("{first} {second}");
   |                ^^^^^ value borrowed here after move
   |
 help: consider cloning the value if the performance cost is acceptable
+  |
+3 |     let second = first.clone();
+  |                       ++++++++
 ```
 
 Read it in four passes. The first line names the family of mistake and often the exact name: `borrow of moved value: first`. The arrow gives the file, line, and column where the problem is reported, in the form `--> file:line:column`.
@@ -40,7 +45,7 @@ A recent compiler prints a process id in parentheses after `main` in a panic lin
 
 ## Moving and borrowing
 
-### E0382: use of moved value
+### E0382: borrow of moved value
 
 A `String` owns a piece of text on the heap. Assigning it to another name moves the ownership; the first name is no longer valid. Rust refuses to let two names own one allocation, because both would try to free it at the end of the block.
 
@@ -170,7 +175,7 @@ fn main() {
 
 A typo produces the same message with a different name, and the `help:` line often suggests the binding you meant. Check the spelling before you add a new line.
 
-### E0433: failed to resolve
+### E0433: cannot find module or crate
 
 A path with `::` walks through modules and crates. A module is a named box of code, usually one file, and `mod` declares one. If the first name in the path is unknown, the path cannot start.
 
@@ -192,9 +197,9 @@ fn main() {
 
 `mod grid;` tells Rust to read `src/grid.rs` and make its public items reachable under `grid::`. In a project with several crates, the same message can mean a missing `use` or a dependency that is not listed.
 
-### E0061: this function takes two arguments but one was supplied
+### E0061: this function takes 2 arguments but 1 argument was supplied
 
-A function's signature is a promise about how many values it takes and what types they have. The call must keep that promise. The caret shows the first missing argument, and the dashes show where it belongs.
+A function's signature is a promise about how many values it takes and what types they have. The call must keep that promise. The caret marks the call, the dashes after the supplied argument mark the missing one, and the note names its number and type.
 
 ```rust title="before"
 fn idx(row: usize, col: usize) -> usize {

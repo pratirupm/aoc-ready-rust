@@ -87,13 +87,13 @@ fn distances(grid: &Grid, start: usize) -> Vec<usize> {
 }
 ```
 
-Every edge costs one step, so the queue visits cells in rings: all cells at distance one, then all at distance two, and so on. The first time a cell is reached is therefore the shortest distance to it. Part one reads `dist[exit]` and returns it, with a zero for the unreachable case.
+Every edge costs one step, so the queue visits cells in rings: all cells at distance one, then all at distance two, and so on. The first time a cell is reached is therefore the shortest distance to it. Part one reads the distance at the exit and returns it, with a zero for the unreachable case.
 
 Part two asks how many different shortest walks reach the exit. A walk is a sequence of steps, and two walks count as different if they take different cells in a different order. The trick is to count in the same ring order the search already produced.
 
 ```rust title="rust-aoc-lab/src/bin/drill07.rs"
     let mut ways = vec![0u64; grid.cells.len()];
-    ways[start] = 1;
+    ways[*start] = 1;
 
     let mut order: Vec<usize> = (0..grid.cells.len())
         .filter(|&index| dist[index] != usize::MAX)
@@ -108,12 +108,12 @@ Part two asks how many different shortest walks reach the exit. A walk is a sequ
         }
     }
 
-    ways[exit]
+    ways[*exit]
 ```
 
 The `filter` line keeps only the cells the search reached, `collect` gathers them into a `Vec`, and `sort_by_key` orders them by distance. Every open edge moves exactly one ring forward, so a cell only receives counts from the ring before it. When the loop reaches a cell, every contributor has already been counted.
 
-`ways[start]` begins at one because there is one empty walk at the start. Each open edge that leads one ring forward adds the count from the cell behind it. The modulo keeps the number inside a `u64`; the drill uses a large prime out of habit, and real puzzles say in the statement when they want a remainder.
+The count at the start cell begins at one because there is one empty walk at the start. Each open edge that leads one ring forward adds the count from the cell behind it. The modulo keeps the number inside a `u64`; the drill uses a large prime out of habit, and real puzzles say in the statement when they want a remainder.
 
 Run the tests:
 

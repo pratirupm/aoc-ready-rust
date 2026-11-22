@@ -1,9 +1,18 @@
 //! Turning text into numbers and blocks.
 
 /// Split the input on blank lines and drop empty blocks.
+///
+/// Both `\n\n` and `\r\n\r\n` are accepted, so a file saved on Windows behaves
+/// like one saved on Linux. The slices borrow the caller's input.
 pub fn blocks(input: &str) -> Vec<&str> {
+    let separator = if input.contains("\r\n\r\n") {
+        "\r\n\r\n"
+    } else {
+        "\n\n"
+    };
+
     input
-        .split("\n\n")
+        .split(separator)
         .map(str::trim)
         .filter(|block| !block.is_empty())
         .collect()
@@ -78,6 +87,12 @@ mod tests {
     fn blocks_ignores_empty_blocks() {
         let input = "one\n\n\ntwo\nthree\n\n";
         assert_eq!(blocks(input), vec!["one", "two\nthree"]);
+    }
+
+    #[test]
+    fn blocks_accepts_windows_line_endings() {
+        let input = "one\r\n\r\ntwo\r\nthree\r\n";
+        assert_eq!(blocks(input), vec!["one", "two\r\nthree"]);
     }
 
     #[test]

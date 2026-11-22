@@ -11,7 +11,8 @@
     "lint": "bun scripts/lint-prose.ts",
     "stats": "bun scripts/stats.ts",
     "links": "bun scripts/check-links.ts",
-    "check": "astro check && bun run lint"
+    "snippets": "bun scripts/check-snippets.ts",
+    "check": "astro check && bun run snippets && bun run lint"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.43.1",
