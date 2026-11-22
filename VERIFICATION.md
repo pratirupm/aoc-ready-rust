@@ -46,12 +46,41 @@ The book contains 143 Rust fences. They were audited page by page:
 
 ```console
 $ bun run check      # Astro 0 errors; snippets 0 problems; prose 0 errors, 0 warnings
-$ bun run stats      # 27 pages, 43,478 words, 0 outside 1,200–4,000
-$ bun run build      # 28 pages
-$ bun run links      # all 1,143 internal links resolve
+$ bun run stats      # 27 pages, 43,490 words, 0 outside 1,200–4,000
+$ bun run build      # 28 pages, 69 links prefixed, 8 tables wrapped
+$ bun run links      # all 1,172 internal links resolve
 ```
 
-The build prints one warning: the sitemap integration is skipped because no `site` URL is configured.
+## Design and accessibility
+
+A rendered pass at 1440×900 and 390×844, in light and dark, covered the landing, Day 1, the setup page, and the year table. Fixes applied:
+
+- Light accent darkened from `#d34a17` (4.41:1) to `#c14315` (5.15:1), passing AA for links and buttons.
+- Scrollable code blocks now use the accent for `:focus-visible`; the dark-mode default was invisible.
+- Note and tip asides use the rust accent instead of Starlight's stock indigo/purple.
+- Card icon tiles use one accent tint instead of four pastel hues.
+- Tables are wrapped after build, scroll horizontally on mobile, and carry a “Scroll sideways” hint plus a right-edge fade. The eleven-years table keeps all five columns reachable.
+- Prose renders at 17px and code at 15px, as intended.
+- The landing content shares the 46rem measure; the fourth card is a real link to the field guide.
+- “Start here” and “Ground floor” start collapsed, so the Field guide header is above the fold on chapter pages.
+- Mobile tabs wrap instead of clipping; menu, search, copy, and tab targets are at least 44px.
+- A `prefers-reduced-motion` guard is in place.
+
+## Deployment
+
+- Repository: [pratirupm/aoc-ready-rust](https://github.com/pratirupm/aoc-ready-rust)
+- Live site: [pratirupm.github.io/aoc-ready-rust](https://pratirupm.github.io/aoc-ready-rust/)
+- GitHub Actions builds with Bun and deploys `dist/` on every push to `main`.
+- The site uses `site` + `base`; `scripts/prefix-links.ts` rewrites 69 hand-written root-relative links and wraps 8 tables after Astro builds.
+- The workflow completed: build 16s, deploy 11s. Home, chapter, setup, field guide, fonts, CSS, JS, and sitemap return 200.
+
+## What was not tested
+
+- **Zed's GUI itself.** The Flatpak launches and its CLI, settings path, sandboxed Cargo, tasks, and rust-analyzer toolchain were verified. Opening a window, clicking tasks, and reading diagnostics were not automated.
+- **The full Git workflow.** Git commands were syntax-checked, and the first-commit sequence was reproduced in an isolated scratch repository. No real commit was made in a reader's copy during the audit.
+- **Every page and interaction.** Four representative pages were rendered at both widths and themes. The production search dialog (Pagefind) was not automated; a click-through of all 27 pages and keyboard-only navigation was not exhaustive.
+- **External links, checked once.** All 28 external URLs returned 200 on 2026-11-23. They can change later.
+- **A custom domain.** GitHub Pages provides the URL above; no CNAME is configured.
 
 ## Zed Flatpak
 
@@ -70,14 +99,6 @@ rust-analyzer 1.99.1 (58cf8f9 2026-10-13)
 
 - Inside the sandbox, `cargo test` reports all 41 tests passing and `cargo clippy -D warnings` is clean, so Zed tasks and rust-analyzer have the tools they need.
 - Flatpak Zed ships its own `rust-analyzer`; `rustfmt` and `clippy` come from the host toolchain.
-
-## What was not tested
-
-- **Zed's GUI itself.** The Flatpak launches and its CLI, settings path, sandboxed Cargo, tasks, and rust-analyzer toolchain were verified. Opening a window, clicking tasks, and reading diagnostics were not automated.
-- **The full Git workflow.** Git commands were syntax-checked, and the first-commit sequence was reproduced in an isolated scratch repository. No real commit was made in a reader's copy during the audit.
-- **The rendered site, partially.** The home page and Day 1 were rendered at 1440×900, and the home page at 390×844. The card grid, code blocks, sidebar, table of contents, and mobile stack were checked. A click-through of all 27 pages, every theme, and keyboard-only navigation was not done.
-- **External links, checked once.** All 28 external URLs returned 200 on 2026-11-23. They can change later.
-- **Deployment.** No host is configured; `dist/` is the deliverable.
 
 ## Reproduce
 

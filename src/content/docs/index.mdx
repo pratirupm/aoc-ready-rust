@@ -10,10 +10,10 @@ hero:
       icon: right-arrow
     - text: Set up your workbench
       link: /aoc-ready-rust/start/setup/
-      variant: minimal
+      variant: secondary
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 This book starts at the beginning. You do not need to have written a program
 before. You do not need Rust, Git, a computer science course, or a fast
@@ -39,10 +39,11 @@ morning of the event.
 		Parsing, grids, search, dynamic programming, simulation, and intervals,
 		all in plain Rust with no dependencies.
 	</Card>
-	<Card title="A field guide for December" icon="list-format">
-		Eleven years of puzzles, a pattern index, an error decoder, and a cheat
-		sheet, ready when a day gets hard.
-	</Card>
+	<LinkCard
+		title="A field guide for December"
+		href="/aoc-ready-rust/appendix/eleven-years/"
+		description="Eleven years of puzzles, a pattern index, an error decoder, and a cheat sheet, ready when a day gets hard."
+	/>
 </CardGrid>
 
 ## What the lab does

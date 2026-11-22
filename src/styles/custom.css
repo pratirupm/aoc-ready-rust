@@ -18,8 +18,8 @@
 
 :root[data-theme='light'] {
 	--sl-color-accent-low: hsl(16, 85%, 92%);
-	--sl-color-accent: hsl(16, 80%, 46%);
-	--sl-color-accent-high: hsl(16, 75%, 30%);
+	--sl-color-accent: hsl(16, 80%, 42%);
+	--sl-color-accent-high: hsl(16, 75%, 28%);
 }
 
 body {
@@ -36,6 +36,16 @@ samp {
 
 .sl-markdown-content :is(h1, h2, h3, h4) {
 	letter-spacing: -0.02em;
+}
+
+/* The page title lives outside `.sl-markdown-content`. */
+h1 {
+	letter-spacing: -0.03em;
+	text-wrap: balance;
+}
+
+.sl-markdown-content :is(h2, h3, h4) {
+	text-wrap: balance;
 }
 
 .sl-markdown-content :is(p, li) {
@@ -107,4 +117,125 @@ samp {
 	opacity: 1;
 	-webkit-mask-image: none;
 	mask-image: none;
+}
+
+/* Asides: the book's rust accent, not Starlight's stock indigo/purple. */
+.starlight-aside--note,
+.starlight-aside--tip {
+	--sl-color-asides-text-accent: var(--sl-color-accent-high);
+	--sl-color-asides-border: var(--sl-color-accent);
+	background-color: color-mix(in srgb, var(--sl-color-accent) 8%, var(--sl-color-bg));
+}
+
+/* Cards: one accent tile instead of a pastel per position. */
+.card {
+	--sl-card-border: var(--sl-color-accent);
+	--sl-card-bg: var(--sl-color-accent-low);
+}
+
+/* Apply the reading sizes where Starlight and Expressive Code consume them. */
+.sl-markdown-content {
+	font-size: 1.0625rem;
+}
+
+.expressive-code {
+	--ec-codeFontSize: 0.9375rem;
+}
+
+/* The landing gets the same right edge as its prose. */
+.sl-container > .sl-markdown-content {
+	max-width: 46rem;
+}
+
+/* Tables scroll as a unit, so no column is silently clipped. */
+.table-scroll-frame {
+	position: relative;
+	margin-block: 1.5rem;
+}
+
+.table-scroll {
+	max-width: 100%;
+	overflow-x: auto;
+	scrollbar-width: thin;
+}
+
+.table-scroll table {
+	min-width: 44rem;
+}
+
+.table-scroll :is(th, td) {
+	padding: 0.5rem 0.6rem;
+}
+
+.table-scroll-hint {
+	display: none;
+}
+
+@media (max-width: 50rem) {
+	.table-scroll-hint {
+		display: block;
+		margin: 0 0 0.35rem;
+		font-size: 0.8125rem;
+		color: var(--sl-color-gray-3);
+	}
+
+	.table-scroll-frame::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: 1.5rem;
+		background: linear-gradient(to right, transparent, var(--sl-color-bg));
+		pointer-events: none;
+	}
+}
+
+/* Keyboard focus must survive on a dark code surface. */
+.expressive-code pre:focus-visible {
+	outline: 2px solid var(--sl-color-accent);
+	outline-offset: 2px;
+}
+
+/* A thin scrollbar is the cheapest "there is more code" cue. */
+.expressive-code pre {
+	scrollbar-width: thin;
+	scrollbar-color: var(--sl-color-gray-3) transparent;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* Touch targets: 24px is the WCAG floor, but 44px is the comfortable size. */
+@media (max-width: 50rem) {
+	.sl-menu-button,
+	button[aria-label='Search'],
+	.expressive-code button {
+		min-width: 44px;
+		min-height: 44px;
+	}
+
+	.sl-markdown-content [role='tablist'] {
+		flex-wrap: wrap;
+		row-gap: 0.25rem;
+	}
+
+	.sl-markdown-content [role='tab'] {
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+	}
+}
+
+@media (hover: none) {
+	.expressive-code button {
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
 }

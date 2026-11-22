@@ -33,19 +33,35 @@ async function walk(dir: string): Promise<string[]> {
 
 let changed = 0;
 let links = 0;
+let tables = 0;
 
 for (const file of await walk(distDir)) {
 	const html = await readFile(file, 'utf8');
-	const next = html.replace(/\b(href|src)="(\/(?!\/)[^"]*)"/g, (whole, attr, path) => {
+	const withBase = html.replace(/\b(href|src)="(\/(?!\/)[^"]*)"/g, (whole, attr, path) => {
 		if (path === base || path.startsWith(`${base}/`)) return whole;
 		links++;
 		return `${attr}="${base}${path}"`;
 	});
 
-	if (next !== html) {
-		await writeFile(file, next);
+	const withTables = withBase.replace(
+		/(<table[^>]*>)([\s\S]*?)(<\/table>)/g,
+		(_whole, open, body, close) => {
+			tables++;
+			return (
+				'<div class="table-scroll-frame">' +
+				'<p class="table-scroll-hint">Scroll sideways for all columns.</p>' +
+				`<div class="table-scroll">${open}${body}${close}</div>` +
+				'</div>'
+			);
+		},
+	);
+
+	if (withTables !== html) {
+		await writeFile(file, withTables);
 		changed++;
 	}
 }
 
-console.log(`Prefixed ${links} root-relative link(s) in ${changed} HTML file(s).`);
+console.log(
+	`Prefixed ${links} root-relative link(s) and wrapped ${tables} table(s) in ${changed} HTML file(s).`,
+);

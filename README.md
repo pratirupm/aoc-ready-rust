@@ -33,6 +33,15 @@ $ cd rust-aoc-lab
 $ cargo test
 ```
 
+## Deploy
+
+Pushes to `main` run `.github/workflows/deploy.yml` and publish the book to
+[pratirupm.github.io/aoc-ready-rust](https://pratirupm.github.io/aoc-ready-rust/).
+
+The site uses `site` and `base` in `astro.config.mjs`. `bun run build` runs
+`scripts/prefix-links.ts` after Astro, so hand-written root-relative links keep
+working under the project path. `bun run links` understands the same base.
+
 ## Layout
 
 ```

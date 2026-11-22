@@ -47,6 +47,7 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: 'Start here',
+					collapsed: true,
 					items: [
 						{ label: 'Who this is for', slug: 'start/who-this-is-for' },
 						{ label: 'What you will build', slug: 'start/what-you-will-build' },
@@ -57,6 +58,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Ground floor',
+					collapsed: true,
 					items: [
 						{ label: 'Open a terminal', slug: 'ground-floor/open-a-terminal' },
 						{ label: 'Your first Rust program', slug: 'ground-floor/your-first-rust-program' },
