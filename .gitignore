@@ -1,0 +1,32 @@
+# build output
+dist/
+# generated types
+.astro/
+# local browser checks
+.playwright-mcp/
+
+# dependencies
+node_modules/
+
+# Rust build output
+target/
+rust-aoc-lab/target/
+
+# Personal Advent of Code inputs never belong in the repository
+rust-aoc-lab/data/inputs/
+
+# editor-local settings
+.zed/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store

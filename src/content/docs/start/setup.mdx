@@ -1,0 +1,406 @@
+---
+title: "Set up your workbench"
+description: "Install Rust, Git, and Zed, then connect rust-analyzer, rustfmt, and clippy."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+We need three tools: Rust, Git, and Zed. Rust builds and runs the project. Git saves the history. Zed is where we type, read compiler messages, and run tests.
+
+Install Rust and Git first. Then install Zed and connect it to the Rust tools. The checks at the end tell you whether everything is ready.
+
+:::note
+If you have never used a terminal, read [Open a terminal](/ground-floor/open-a-terminal/) first. It shows how to find the program, type a command, and read what comes back.
+:::
+
+## Install Rust
+
+Rust is installed and updated with a tool called `rustup`. It also installs `cargo`, the build tool we use throughout the book.
+
+<Tabs>
+<TabItem label="macOS and Linux">
+
+Open a terminal and run the official installer:
+
+```console
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Press Enter to accept the default options. When it finishes, close the terminal and open a new one so the new commands are on your path.
+
+</TabItem>
+<TabItem label="Windows">
+
+Download the installer from [rustup.rs](https://rustup.rs/) and run it. Accept the default options. The installer may ask to install the Microsoft C++ build tools; say yes, because Rust needs a linker.
+
+When it finishes, close PowerShell and open a new window.
+
+</TabItem>
+</Tabs>
+
+Check that both commands work:
+
+```console
+$ rustc --version
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+$ cargo --version
+cargo 1.99.1 (5f94df478 2026-08-27)
+```
+
+Your version numbers will be different, and that is fine. What matters is that each command prints a version instead of an error.
+
+## Install Git
+
+Git is the version control system we use from the first commit onward.
+
+<Tabs>
+<TabItem label="macOS">
+
+The most direct route is the developer tools that come with macOS:
+
+```console
+$ xcode-select --install
+```
+
+If you use Homebrew, `brew install git` also works.
+
+</TabItem>
+<TabItem label="Linux">
+
+Use your distribution's package manager. On Debian or Ubuntu, the command is:
+
+```console
+$ sudo apt install git
+```
+
+On Fedora, the package name is the same:
+
+```console
+$ sudo dnf install git
+```
+
+On Arch, the package manager is `pacman`:
+
+```console
+$ sudo pacman -S git
+```
+
+Any of these installs the `git` command and its documentation.
+
+</TabItem>
+<TabItem label="Windows">
+
+Download Git from [git-scm.com](https://git-scm.com/download/win) and run the installer. The default options are fine. This also gives you Git Bash, a terminal that behaves like the ones in the book.
+
+</TabItem>
+</Tabs>
+
+Check it:
+
+```console
+$ git --version
+git version 2.56.1
+```
+
+Again, your version will differ. A version number means Git is ready.
+
+## Install Zed
+
+Zed is the editor this book uses. It understands Rust through `rust-analyzer`, shows diagnostics as you type, and can run Cargo commands without leaving the window.
+
+<Tabs>
+<TabItem label="macOS">
+
+If you use Homebrew:
+
+```console
+$ brew install --cask zed
+```
+
+Otherwise, download Zed from [zed.dev/download](https://zed.dev/download) and move it to Applications. After the first launch, Zed updates itself.
+
+</TabItem>
+<TabItem label="Linux">
+
+Run the official install script:
+
+```console
+$ curl -f https://zed.dev/install.sh | sh
+```
+
+The script also installs the `zed` command. Your distribution may package Zed as well, but a distribution build can lag behind.
+
+</TabItem>
+<TabItem label="Windows">
+
+Use `winget`:
+
+```console
+$ winget install -e --id ZedIndustries.Zed
+```
+
+You can also run the installer from [zed.dev/download](https://zed.dev/download). The installer puts the `zed` command on your path.
+
+</TabItem>
+</Tabs>
+
+Open Zed once. You do not need an account or any AI features for this book.
+
+## Open the project
+
+After [the page that creates the project](/ground-floor/your-first-rust-program/), open the `rust-aoc-lab` folder itself in Zed:
+
+```console
+$ cd rust-aoc-lab
+$ zed .
+```
+
+On macOS, if `zed` is not found, open the command palette with `cmd-shift-p` and run `cli: install cli binary`. Then try the two commands again.
+
+## Add the Rust tools
+
+Zed talks to three Rust tools. Install them into the active toolchain:
+
+```console
+$ rustup component add rust-analyzer rustfmt clippy
+```
+
+`rust-analyzer` provides completions, type information, go-to-definition, and the errors that appear as you type. `rustfmt` formats the code. `clippy` adds a second set of warnings about code that compiles but could be clearer.
+
+Check that all three answer:
+
+```console
+$ rust-analyzer --version
+rust-analyzer 1.99.1 (58cf8f9 2026-10-13)
+$ cargo clippy --version
+clippy 0.1.99 (58cf8f9c35 2026-10-13)
+$ cargo fmt --version
+rustfmt 1.10.0-stable (58cf8f9c35 2026-10-13)
+```
+
+Your versions will differ. Each command should print a version instead of an error.
+
+## Configure Zed
+
+Open your user settings with `zed: open settings` from the command palette, or press `cmd-alt-,` on macOS and `ctrl-alt-,` on Linux and Windows. On macOS and Linux the file lives at `~/.config/zed/settings.json`; on Windows it is `%APPDATA%\Zed\settings.json`.
+
+Put this in the file:
+
+```json title="~/.config/zed/settings.json"
+{
+  "theme": "One Dark",
+  "ui_font_family": "0xProto",
+  "buffer_font_family": "0xProto",
+  "buffer_font_size": 15,
+  "terminal": {
+    "font_family": "0xProto",
+    "font_size": 15
+  },
+  "autosave": "on_focus_change",
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true
+  },
+  "languages": {
+    "Rust": {
+      "language_servers": ["rust-analyzer"],
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "tab_size": 4,
+      "hard_tabs": false,
+      "preferred_line_length": 100
+    }
+  },
+  "lsp": {
+    "rust-analyzer": {
+      "enable_lsp_tasks": true,
+      "initialization_options": {
+        "checkOnSave": true,
+        "check": {
+          "command": "clippy"
+        },
+        "cargo": {
+          "allTargets": true,
+          "allFeatures": true
+        },
+        "inlayHints": {
+          "bindingModeHints": { "enable": true },
+          "chainingHints": { "enable": true },
+          "closureReturnTypeHints": { "enable": "always" },
+          "parameterHints": { "enable": true },
+          "typeHints": { "enable": true }
+        }
+      }
+    }
+  },
+  "diagnostics_max_severity": "all",
+  "git": {
+    "git_gutter": "tracked_files"
+  }
+}
+```
+
+The settings do four jobs. Under `languages.Rust`, rustfmt formats the file whenever you save. Under `lsp.rust-analyzer`, `check.command` switches the on-save checker from `cargo check` to clippy. `inlayHints` shows inferred types and parameter names without adding them to the code. `enable_lsp_tasks` gives tests a run button in the gutter.
+
+If the hints feel busy, change `"enabled"` to `false`; everything else keeps working. If you do not install 0xProto, remove the three font lines or replace `0xProto` with a font you have.
+
+<details>
+<summary>Install 0xProto for the editor</summary>
+
+The site uses 0xProto, and you can use it in Zed too. Download the release zip and unpack it:
+
+```console
+$ curl -LO https://github.com/0xType/0xProto/releases/download/2.502/0xProto_2_502.zip
+$ unzip 0xProto_2_502.zip
+```
+
+On macOS, open `fonts/0xProto-Regular.ttf` and `fonts/0xProto-Bold.ttf`. Font Book installs them. On Windows, select those two files, right-click, and choose Install. On Linux, copy them into your font folder and refresh the cache:
+
+```console
+$ mkdir -p ~/.local/share/fonts
+$ cp fonts/0xProto-Regular.ttf fonts/0xProto-Bold.ttf ~/.local/share/fonts/
+$ fc-cache -f
+```
+
+Restart Zed after installing the font. The `0xProto` name should appear in the font picker.
+
+</details>
+
+## Add project tasks
+
+Zed can run Cargo commands from a task menu. Wait until the first commit on [Tests and your first commit](/ground-floor/tests-and-your-first-commit/), then add a folder named `.zed` inside `rust-aoc-lab`, with a file named `tasks.json`. That commit assumes the project has no editor folder yet. If you create `.zed` earlier, add `.zed/` to `.gitignore` so it stays out of the commit.
+
+```json title=".zed/tasks.json"
+[
+  {
+    "label": "cargo test",
+    "command": "cargo",
+    "args": ["test"],
+    "tags": ["rust-test"],
+    "save": "all",
+    "reveal": "always"
+  },
+  {
+    "label": "cargo clippy",
+    "command": "cargo",
+    "args": [
+      "clippy",
+      "--all-targets",
+      "--all-features",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "save": "all",
+    "reveal": "always"
+  },
+  {
+    "label": "cargo fmt",
+    "command": "cargo",
+    "args": ["fmt"],
+    "save": "all"
+  },
+  {
+    "label": "cargo run",
+    "command": "cargo",
+    "args": ["run"],
+    "save": "all",
+    "reveal": "always"
+  }
+]
+```
+
+Open the task menu with `task: spawn` from the command palette, pick a task, and Zed runs it in the project root. `task: rerun` runs the last task again. The `cargo test` task carries the `rust-test` tag, so the run button beside a test uses it.
+
+The clippy task treats warnings as errors. That is useful before a commit. Remove `-- -D warnings` if you want a report that does not fail.
+
+## Optional: keybindings
+
+If you want one key per task, add a keymap file. On macOS and Linux it lives at `~/.config/zed/keymap.json`; on Windows it is `%APPDATA%\Zed\keymap.json`.
+
+```json title="~/.config/zed/keymap.json"
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-t": ["task::Spawn", { "task_name": "cargo test" }],
+      "alt-c": ["task::Spawn", { "task_name": "cargo clippy" }],
+      "alt-r": ["task::Spawn", { "task_name": "cargo run" }]
+    }
+  }
+]
+```
+
+These bindings use `alt`, which is Option on macOS. If a shortcut clashes with your system or keyboard layout, choose another combination.
+
+## Optional: debug the lab
+
+Zed can start a debugger with CodeLLDB. Once the lab has a `main` that runs, add `.zed/debug.json`:
+
+```json title=".zed/debug.json"
+[
+  {
+    "label": "Debug rust-aoc-lab",
+    "adapter": "CodeLLDB",
+    "build": {
+      "command": "cargo",
+      "args": ["build"]
+    },
+    "program": "$ZED_WORKTREE_ROOT/target/debug/rust-aoc-lab",
+    "sourceLanguages": ["rust"]
+  }
+]
+```
+
+Press `F4` with a Rust file open, choose `Debug rust-aoc-lab`, and click the gutter to set a breakpoint. The early pages do not need the debugger, but it is there when a bug is hard to see.
+
+## Check the workbench
+
+Open a terminal and run the checks together:
+
+```console
+$ rustc --version
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+$ cargo --version
+cargo 1.99.1 (5f94df478 2026-08-27)
+$ git --version
+git version 2.56.1
+$ rust-analyzer --version
+rust-analyzer 1.99.1 (58cf8f9 2026-10-13)
+$ cargo clippy --version
+clippy 0.1.99 (58cf8f9c35 2026-10-13)
+$ cargo fmt --version
+rustfmt 1.10.0-stable (58cf8f9c35 2026-10-13)
+```
+
+Each line should print a version. The exact numbers do not matter; a newer version is fine. If one command prints "command not found" or "is not recognized", see below.
+
+## If something went wrong
+
+**`command not found` right after installing**: the terminal still has the old path. Close it completely and open a new one. On Windows, sign out and back in if a new PowerShell window does not help.
+
+**`rustup: command not found` on macOS or Linux**: add Cargo's folder to your shell by running `source "$HOME/.cargo/env"`, then try again. New terminals should pick it up automatically.
+
+**`error: linker 'cc' not found`**: Rust is installed but the system linker is missing. On Linux, install a C compiler such as `build-essential` (Debian/Ubuntu) or `gcc` (Fedora). On Windows, rerun the Rust installer and accept the C++ build tools.
+
+**`Permission denied` while installing on Linux**: do not run the Rust installer with `sudo`. It installs into your home folder. If a previous `sudo` attempt left root-owned files behind, remove `$HOME/.rustup` and `$HOME/.cargo`, then run the installer again as your normal user.
+
+**Git asks for a name and email**: that is normal. We set them on [Tests and your first commit](/ground-floor/tests-and-your-first-commit/), right before the first commit.
+
+**Zed says `rust-analyzer` is not found**: run `rustup component add rust-analyzer`, then quit and reopen the project. Zed looks for `rust-analyzer` in your `PATH` before downloading its own copy.
+
+**Saving does not format the file**: check that `formatter` and `format_on_save` sit inside `languages.Rust`, not at the top level. Run `cargo fmt --version` to confirm rustfmt is installed.
+
+**Clippy runs on every save and feels slow**: that is the cost of live diagnostics. Set `"checkOnSave": false` under `initialization_options` and use the `cargo clippy` task before commits instead.
+
+**Zed says the settings file is invalid**: JSON needs double quotes around every key and string, and no trailing commas. Start from the block above and change one value at a time.
+
+**0xProto is not in the font list**: install the TTF or OTF files, not the `.woff2` files used by the website. Restart Zed after installing them.
+
+**`task: spawn` does not show the Cargo tasks**: the file must be at `.zed/tasks.json` inside the folder you opened. Open the `rust-aoc-lab` folder itself, not the folder above it.
+
+**Zed fails to start on Linux with a Vulkan error**: update your GPU drivers. Zed needs a Vulkan 1.3 driver. See [Zed on Linux](https://zed.dev/docs/linux) for the driver notes.
+
+The tools are ready. Next, [meet Zed](/start/meet-zed/) and learn where everything lives.

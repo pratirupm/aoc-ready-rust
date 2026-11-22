@@ -1,0 +1,83 @@
+---
+title: Rust Before December
+description: From your first program to your first Advent of Code, one small step at a time.
+template: splash
+hero:
+  tagline: From your first program to your first Advent of Code, one small step at a time.
+  actions:
+    - text: Start from zero
+      link: /start/who-this-is-for/
+      icon: right-arrow
+    - text: Set up your workbench
+      link: /start/setup/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+This book starts at the beginning. You do not need to have written a program
+before. You do not need Rust, Git, a computer science course, or a fast
+machine. You need a terminal, permission to install two free tools, and some
+patience with a compiler that talks a lot.
+
+We spend a day on the ground floor: opening a terminal, running a program,
+storing values, writing functions, reading errors, and saving work in Git. Then
+we climb for seven days. Each day adds one AoC-shaped skill and one small,
+original drill. By December you have a toolkit you can open on the first
+morning of the event.
+
+<CardGrid stagger>
+	<Card title="From zero" icon="open-book">
+		Every programming word is defined where it first appears. The first page
+		opens a terminal, not a textbook.
+	</Card>
+	<Card title="A small step each day" icon="clock">
+		One idea, one piece of code, one drill. The book gives you a minimum path
+		and a longer path when you have the energy.
+	</Card>
+	<Card title="A toolkit you keep" icon="puzzle">
+		Parsing, grids, search, dynamic programming, simulation, and intervals,
+		all in plain Rust with no dependencies.
+	</Card>
+</CardGrid>
+
+## What the lab does
+
+Every chapter adds a piece to a small Rust project called `rust-aoc-lab`. The
+pieces are the ones Advent of Code keeps asking for: read the input, model the
+grid, search the graph, remember a result, simulate the rules, and do the
+arithmetic.
+
+```console
+$ cargo test drill03
+running 2 tests
+test drill03_part1_example ... ok
+test drill03_part2_example ... ok
+```
+
+The tests are the oracle. When they pass, the code is right on the example.
+Then you run it on the real input.
+
+## What you will practise
+
+You will write loops before iterator chains, concrete types before generics, and
+`for` loops before clever one-liners. The compiler will complain. We read the
+first line of the message together, fix the smallest thing, and run again.
+
+You will also meet the patterns behind the harder days: breadth-first search,
+Dijkstra's algorithm, memoisation, cycle detection, interval arithmetic, and a
+little modular arithmetic. Some puzzles will still be hard. That is normal. The
+field guide tells you what to learn next.
+
+## Who it is for
+
+You should be able to open a terminal and type a command. If you have never
+done that, the first ground-floor page shows you. You do not need to know what
+a variable is. You do not need Git. You do not need to have solved a puzzle
+before.
+
+If you already write code, the ground floor will move quickly. Skim it, do the
+drills, and start the ramp.
+
+Ready? [Find out what you are getting into](/start/who-this-is-for/), or
+[set up your workbench](/start/setup/) and write your first program.

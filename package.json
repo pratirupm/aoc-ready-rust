@@ -1,0 +1,25 @@
+{
+  "name": "aoc-ready-rust",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "bun scripts/lint-prose.ts",
+    "stats": "bun scripts/stats.ts",
+    "links": "bun scripts/check-links.ts",
+    "check": "astro check && bun run lint"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.43.1",
+    "astro": "^7.3.6",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "6"
+  }
+}
