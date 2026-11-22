@@ -3,6 +3,7 @@
 export default {
 	name: 'book-console',
 	scopeName: 'source.book-console',
+	repository: {},
 	patterns: [
 		{
 			begin: '^(\\$)\\s+',
