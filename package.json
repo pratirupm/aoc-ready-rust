@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && bun scripts/prefix-links.ts",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "bun scripts/lint-prose.ts",

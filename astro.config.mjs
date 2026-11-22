@@ -3,8 +3,12 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import consoleGrammar from './src/shiki/console-grammar.mjs';
 
+const base = '/aoc-ready-rust';
+
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://pratirupm.github.io',
+	base,
 	markdown: {
 		shikiConfig: {
 			langs: [consoleGrammar],
@@ -17,12 +21,12 @@ export default defineConfig({
 			description: 'From your first program to your first Advent of Code, one small step at a time.',
 			customCss: ['./src/styles/fonts.css', './src/styles/custom.css'],
 			head: [
-				{ tag: 'script', attrs: { src: '/console-colors.js', defer: true } },
+				{ tag: 'script', attrs: { src: `${base}/console-colors.js`, defer: true } },
 				{
 					tag: 'link',
 					attrs: {
 						rel: 'preload',
-						href: '/fonts/0xProto-Regular.woff2',
+						href: `${base}/fonts/0xProto-Regular.woff2`,
 						as: 'font',
 						type: 'font/woff2',
 						crossorigin: 'anonymous',
@@ -32,7 +36,7 @@ export default defineConfig({
 					tag: 'link',
 					attrs: {
 						rel: 'preload',
-						href: '/fonts/0xProto-Bold.woff2',
+						href: `${base}/fonts/0xProto-Bold.woff2`,
 						as: 'font',
 						type: 'font/woff2',
 						crossorigin: 'anonymous',

@@ -5,6 +5,9 @@ import { dirname, join, relative, resolve } from 'node:path';
 const root = process.cwd();
 const distDir = join(root, 'dist');
 
+const config = await readFile(join(root, 'astro.config.mjs'), 'utf8');
+const base = /(?:const\s+base\s*=\s*|base:\s*)['"]([^'"]+)['"]/.exec(config)?.[1] ?? '/';
+
 type Finding = { source: string; href: string };
 
 async function walk(dir: string): Promise<string[]> {
@@ -33,24 +36,28 @@ async function resolveTarget(sourceFile: string, href: string): Promise<string |
 	if (/^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(clean)) return null;
 
 	if (clean.startsWith('/')) {
-		const base = join(distDir, clean);
+		const withoutBase =
+			base !== '/' && (clean === base || clean.startsWith(`${base}/`))
+				? clean.slice(base.length) || '/'
+				: clean;
+		const basePath = join(distDir, withoutBase);
 		const candidates = [
-			base,
-			join(base, 'index.html'),
-			`${base}.html`,
+			basePath,
+			join(basePath, 'index.html'),
+			`${basePath}.html`,
 		];
 		for (const candidate of candidates) {
 			if (await exists(candidate)) return candidate;
 		}
-		return base;
+		return basePath;
 	}
 
-	const base = resolve(dirname(sourceFile), clean);
-	const candidates = [base, join(base, 'index.html'), `${base}.html`];
+	const resolved = resolve(dirname(sourceFile), clean);
+	const candidates = [resolved, join(resolved, 'index.html'), `${resolved}.html`];
 	for (const candidate of candidates) {
 		if (await exists(candidate)) return candidate;
 	}
-	return base;
+	return resolved;
 }
 
 if (!(await exists(distDir))) {
