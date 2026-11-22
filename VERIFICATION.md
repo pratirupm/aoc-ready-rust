@@ -46,7 +46,7 @@ The book contains 143 Rust fences. They were audited page by page:
 
 ```console
 $ bun run check      # Astro 0 errors; snippets 0 problems; prose 0 errors, 0 warnings
-$ bun run stats      # 27 pages, 43,458 words, 0 outside 1,200–4,000
+$ bun run stats      # 27 pages, 43,478 words, 0 outside 1,200–4,000
 $ bun run build      # 28 pages
 $ bun run links      # all 1,143 internal links resolve
 ```
@@ -75,7 +75,8 @@ rust-analyzer 1.99.1 (58cf8f9 2026-10-13)
 
 - **Zed's GUI itself.** The Flatpak launches and its CLI, settings path, sandboxed Cargo, tasks, and rust-analyzer toolchain were verified. Opening a window, clicking tasks, and reading diagnostics were not automated.
 - **The full Git workflow.** Git commands were syntax-checked, and the first-commit sequence was reproduced in an isolated scratch repository. No real commit was made in a reader's copy during the audit.
-- **The rendered site.** The HTML build and every internal link were checked, but the browser cache was removed during the audit, so no screenshot pass was taken.
+- **The rendered site, partially.** The home page and Day 1 were rendered at 1440×900, and the home page at 390×844. The card grid, code blocks, sidebar, table of contents, and mobile stack were checked. A click-through of all 27 pages, every theme, and keyboard-only navigation was not done.
+- **External links, checked once.** All 28 external URLs returned 200 on 2026-11-23. They can change later.
 - **Deployment.** No host is configured; `dist/` is the deliverable.
 
 ## Reproduce
