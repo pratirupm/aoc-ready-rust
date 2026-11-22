@@ -19,6 +19,8 @@ $ zed .
 
 The dot means "this folder". Zed opens a window with the folder name in the title bar. On macOS you can also use File > Open Folder, and the result is the same.
 
+On a Linux Flatpak without the wrapper from the setup page, run `flatpak run dev.zed.Zed .` instead.
+
 If you have not created the practice project yet, open any folder with a few text files. You can look around without changing anything, and open `rust-aoc-lab` later.
 
 ## The four parts of the window
@@ -40,7 +42,8 @@ Zed has hundreds of commands. Four shortcuts carry most of the work at the start
 | Open the command palette | `cmd-shift-p` | `ctrl-shift-p` |
 | Find a file by name | `cmd-p` | `ctrl-p` |
 | Save the current file | `cmd-s` | `ctrl-s` |
-| Open your settings | `cmd-,` | `ctrl-,` |
+| Open the settings editor | `cmd-,` | `ctrl-,` |
+| Open the settings file | `cmd-alt-,` | `ctrl-alt-,` |
 
 The command palette is the one to remember. Press the keys, type part of a command name, and press Enter. Every editor command in this book can be reached that way, even when you forget a shortcut.
 

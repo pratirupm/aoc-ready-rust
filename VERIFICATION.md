@@ -46,16 +46,34 @@ The book contains 143 Rust fences. They were audited page by page:
 
 ```console
 $ bun run check      # Astro 0 errors; snippets 0 problems; prose 0 errors, 0 warnings
-$ bun run stats      # 27 pages, 43,111 words, 0 outside 1,200–4,000
+$ bun run stats      # 27 pages, 43,458 words, 0 outside 1,200–4,000
 $ bun run build      # 28 pages
 $ bun run links      # all 1,143 internal links resolve
 ```
 
 The build prints one warning: the sitemap integration is skipped because no `site` URL is configured.
 
+## Zed Flatpak
+
+Tested with Zed Flatpak `1.29.3` (`dev.zed.Zed`, Flathub).
+
+- The CLI is `flatpak run dev.zed.Zed`, not `zed`. A wrapper at `~/.local/bin/zed` was created and `zed --version` works.
+- Flatpak settings live at `~/.var/app/dev.zed.Zed/config/zed/settings.json`, not `~/.config/zed/settings.json`.
+- The sandbox's default `PATH` is `/app/bin:/usr/bin`, so Cargo is invisible. This override was applied and verified:
+
+```console
+$ flatpak override --user --env=PATH="$HOME/.cargo/bin:/app/bin:/usr/bin" dev.zed.Zed
+$ flatpak run --command=sh dev.zed.Zed -lc 'cargo --version; rust-analyzer --version'
+cargo 1.99.1 (5f94df478 2026-08-27)
+rust-analyzer 1.99.1 (58cf8f9 2026-10-13)
+```
+
+- Inside the sandbox, `cargo test` reports all 41 tests passing and `cargo clippy -D warnings` is clean, so Zed tasks and rust-analyzer have the tools they need.
+- Flatpak Zed ships its own `rust-analyzer`; `rustfmt` and `clippy` come from the host toolchain.
+
 ## What was not tested
 
-- **Zed itself.** `zed` is not installed in this environment. The install tabs, command names, JSON settings, tasks, and keybindings were checked against the Zed documentation; `zed .` was not run.
+- **Zed's GUI itself.** The Flatpak launches and its CLI, settings path, sandboxed Cargo, tasks, and rust-analyzer toolchain were verified. Opening a window, clicking tasks, and reading diagnostics were not automated.
 - **The full Git workflow.** Git commands were syntax-checked, and the first-commit sequence was reproduced in an isolated scratch repository. No real commit was made in a reader's copy during the audit.
 - **The rendered site.** The HTML build and every internal link were checked, but the browser cache was removed during the audit, so no screenshot pass was taken.
 - **Deployment.** No host is configured; `dist/` is the deliverable.

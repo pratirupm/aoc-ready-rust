@@ -37,7 +37,7 @@ $ cd rust-aoc-lab
 $ zed .
 ```
 
-The dot `.` means "this folder". If `zed` is not found, [Meet Zed](/start/meet-zed/) shows how to install its command.
+The dot `.` means "this folder". If `zed` is not found, [Meet Zed](/start/meet-zed/) shows how to install its command. On a Linux Flatpak without the wrapper, run `flatpak run dev.zed.Zed .` instead.
 
 ## What Cargo made
 
