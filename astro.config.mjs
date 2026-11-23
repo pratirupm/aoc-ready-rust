@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import consoleGrammar from './src/shiki/console-grammar.mjs';
 
-const base = '/aoc-ready-rust';
+const base = process.env.GITHUB_PAGES === 'true' ? '/aoc-ready-rust' : '/';
 
 // https://astro.build/config
 export default defineConfig({

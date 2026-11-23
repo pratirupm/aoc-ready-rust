@@ -38,9 +38,11 @@ $ cargo test
 Pushes to `main` run `.github/workflows/deploy.yml` and publish the book to
 [pratirupm.github.io/aoc-ready-rust](https://pratirupm.github.io/aoc-ready-rust/).
 
-The site uses `site` and `base` in `astro.config.mjs`. `bun run build` runs
-`scripts/prefix-links.ts` after Astro, so hand-written root-relative links keep
-working under the project path. `bun run links` understands the same base.
+The Pages workflow sets `GITHUB_PAGES=true`, which switches `base` to
+`/aoc-ready-rust`. Local `bun run dev` and `bun run build` stay at `/`, so
+hand-written links work in both places. The build runs
+`scripts/prefix-links.ts` after Astro, so root-relative links keep working
+under the project path. `bun run links` understands the same base.
 
 ## Layout
 

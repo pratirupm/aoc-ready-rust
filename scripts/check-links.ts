@@ -5,8 +5,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 const root = process.cwd();
 const distDir = join(root, 'dist');
 
-const config = await readFile(join(root, 'astro.config.mjs'), 'utf8');
-const base = /(?:const\s+base\s*=\s*|base:\s*)['"]([^'"]+)['"]/.exec(config)?.[1] ?? '/';
+const base = process.env.GITHUB_PAGES === 'true' ? '/aoc-ready-rust' : '/';
 
 type Finding = { source: string; href: string };
 

@@ -46,7 +46,7 @@ The book contains 143 Rust fences. They were audited page by page:
 
 ```console
 $ bun run check      # Astro 0 errors; snippets 0 problems; prose 0 errors, 0 warnings
-$ bun run stats      # 27 pages, 43,490 words, 0 outside 1,200–4,000
+$ bun run stats      # 27 pages, 43,489 words, 0 outside 1,200–4,000
 $ bun run build      # 28 pages, 69 links prefixed, 8 tables wrapped
 $ bun run links      # all 1,200 internal links resolve
 ```
@@ -74,7 +74,8 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 - Repository: [pratirupm/aoc-ready-rust](https://github.com/pratirupm/aoc-ready-rust)
 - Live site: [pratirupm.github.io/aoc-ready-rust](https://pratirupm.github.io/aoc-ready-rust/)
 - GitHub Actions builds with Bun and deploys `dist/` on every push to `main`.
-- The site uses `site` + `base`; `scripts/prefix-links.ts` rewrites 69 hand-written root-relative links, wraps 8 tables, and retitles 26 TOCs after Astro builds.
+- The Pages workflow sets `GITHUB_PAGES=true`; that switches `base` to `/aoc-ready-rust`. Local dev and local builds stay at `/`, so links work in both places.
+- `scripts/prefix-links.ts` rewrites 69 hand-written root-relative links, wraps 8 tables, and retitles 26 TOCs only for the Pages build.
 - The workflow completed successfully. Home, chapter, setup, field guide, fonts, CSS, JS, search, and sitemap were checked against the live URL.
 
 ## What was not tested
