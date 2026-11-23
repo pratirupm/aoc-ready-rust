@@ -47,8 +47,9 @@ The book contains 143 Rust fences. They were audited page by page:
 ```console
 $ bun run check      # Astro 0 errors; snippets 0 problems; prose 0 errors, 0 warnings
 $ bun run stats      # 27 pages, 43,489 words, 0 outside 1,200–4,000
-$ bun run build      # 28 pages, 69 links prefixed, 8 tables wrapped
-$ bun run links      # all 1,200 internal links resolve
+$ bun run build      # local: 28 pages, root-relative links
+$ GITHUB_PAGES=true bun run build   # Pages: 69 links, 8 tables, 26 TOCs
+$ bun run links      # all 1,200 internal links resolve in both builds
 ```
 
 ## Design and accessibility
