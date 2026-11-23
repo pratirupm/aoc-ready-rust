@@ -239,6 +239,25 @@ h1 {
 	background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.06));
 }
 
+/* Mobile menu: a quiet icon button, not Starlight's white floating circle. */
+.sl-menu-button {
+	background-color: transparent;
+	color: var(--sl-color-white);
+	box-shadow: none;
+}
+
+.sl-menu-button:hover,
+.sl-menu-button:focus-visible,
+.sl-menu-button:has(~ :popover-open) {
+	background-color: var(--sl-color-gray-5);
+	box-shadow: none;
+}
+
+:root[data-theme='light'] .sl-menu-button {
+	background-color: transparent;
+	color: var(--sl-color-black);
+}
+
 /* Touch targets: 24px is the WCAG floor, but 44px is the comfortable size. */
 @media (max-width: 50rem) {
 	.sl-menu-button,

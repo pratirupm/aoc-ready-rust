@@ -64,7 +64,7 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 - Prose renders at 17px and code at 15px, as intended.
 - The landing content shares the 46rem measure; the fourth card is a real link to the field guide.
 - “Start here” and “Ground floor” start collapsed, so the Field guide header is above the fold on chapter pages.
-- Mobile tabs wrap instead of clipping; menu, search, copy, and tab targets are at least 44px.
+- Mobile tabs wrap instead of clipping; menu, search, copy, and tab targets are at least 44px. The menu is a quiet icon button, not Starlight's white floating circle.
 - `public/a11y.js` adds `aria-expanded`/`aria-controls` to the mobile drawer toggle, names the Pagefind dialog “Search”, gives each tablist a heading-derived label and each tab an `aria-controls`, labels code regions and copy buttons, and marks overflowing code frames for an edge fade.
 - The “On this page” TOC heading is rewritten to a paragraph after build, so the page H1 is first in the heading outline.
 - Dark TOC links and the last-updated line use a lighter muted token.
