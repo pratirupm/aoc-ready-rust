@@ -171,6 +171,20 @@ h1 {
 	display: none;
 }
 
+/* The TOC heading became a paragraph so the page H1 stays first in the outline. */
+.toc-title {
+	margin: 0 0 0.5rem;
+	font-size: var(--sl-text-h5);
+	font-weight: 600;
+	line-height: var(--sl-line-height-headings);
+	color: var(--sl-color-white);
+}
+
+:root[data-theme='dark'] .right-sidebar-panel a:not([aria-current]),
+:root[data-theme='dark'] footer .meta {
+	color: var(--sl-color-gray-2);
+}
+
 @media (max-width: 50rem) {
 	.table-scroll-hint {
 		display: block;
@@ -202,6 +216,27 @@ h1 {
 	scrollbar-width: thin;
 	scrollbar-color: var(--sl-color-gray-3) transparent;
 	-webkit-overflow-scrolling: touch;
+}
+
+/* Only frames that actually overflow get the edge fade. */
+.expressive-code .frame.is-scrollable {
+	position: relative;
+}
+
+.expressive-code .frame.is-scrollable::after {
+	content: '';
+	position: absolute;
+	top: 2.4rem;
+	right: 0;
+	bottom: 0;
+	width: 1.25rem;
+	background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.22));
+	pointer-events: none;
+	border-radius: 0 var(--ec-brdRad) var(--ec-brdRad) 0;
+}
+
+:root[data-theme='light'] .expressive-code .frame.is-scrollable::after {
+	background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.06));
 }
 
 /* Touch targets: 24px is the WCAG floor, but 44px is the comfortable size. */

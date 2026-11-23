@@ -34,6 +34,7 @@ async function walk(dir: string): Promise<string[]> {
 let changed = 0;
 let links = 0;
 let tables = 0;
+let tocs = 0;
 
 for (const file of await walk(distDir)) {
 	const html = await readFile(file, 'utf8');
@@ -56,12 +57,21 @@ for (const file of await walk(distDir)) {
 		},
 	);
 
-	if (withTables !== html) {
-		await writeFile(file, withTables);
+	const withToc = withTables.replace(
+		/<h2 id="starlight__on-this-page">On this page<\/h2>/g,
+		() => {
+			tocs++;
+			return '<p id="starlight__on-this-page" class="toc-title">On this page</p>';
+		},
+	);
+
+	if (withToc !== html) {
+		await writeFile(file, withToc);
 		changed++;
 	}
 }
 
 console.log(
-	`Prefixed ${links} root-relative link(s) and wrapped ${tables} table(s) in ${changed} HTML file(s).`,
+	`Prefixed ${links} root-relative link(s), wrapped ${tables} table(s), ` +
+		`and retitled ${tocs} table of contents in ${changed} HTML file(s).`,
 );

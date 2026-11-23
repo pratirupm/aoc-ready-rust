@@ -64,7 +64,9 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 - The landing content shares the 46rem measure; the fourth card is a real link to the field guide.
 - “Start here” and “Ground floor” start collapsed, so the Field guide header is above the fold on chapter pages.
 - Mobile tabs wrap instead of clipping; menu, search, copy, and tab targets are at least 44px.
-- A tiny `public/a11y.js` adds `aria-expanded`/`aria-controls` to the mobile drawer toggle and names the Pagefind dialog “Search”.
+- `public/a11y.js` adds `aria-expanded`/`aria-controls` to the mobile drawer toggle, names the Pagefind dialog “Search”, gives each tablist a heading-derived label and each tab an `aria-controls`, labels code regions and copy buttons, and marks overflowing code frames for an edge fade.
+- The “On this page” TOC heading is rewritten to a paragraph after build, so the page H1 is first in the heading outline.
+- Dark TOC links and the last-updated line use a lighter muted token.
 - A `prefers-reduced-motion` guard is in place.
 
 ## Deployment
@@ -72,8 +74,8 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 - Repository: [pratirupm/aoc-ready-rust](https://github.com/pratirupm/aoc-ready-rust)
 - Live site: [pratirupm.github.io/aoc-ready-rust](https://pratirupm.github.io/aoc-ready-rust/)
 - GitHub Actions builds with Bun and deploys `dist/` on every push to `main`.
-- The site uses `site` + `base`; `scripts/prefix-links.ts` rewrites 69 hand-written root-relative links and wraps 8 tables after Astro builds.
-- The workflow completed: build 16s, deploy 11s. Home, chapter, setup, field guide, fonts, CSS, JS, and sitemap return 200.
+- The site uses `site` + `base`; `scripts/prefix-links.ts` rewrites 69 hand-written root-relative links, wraps 8 tables, and retitles 26 TOCs after Astro builds.
+- The workflow completed successfully. Home, chapter, setup, field guide, fonts, CSS, JS, search, and sitemap were checked against the live URL.
 
 ## What was not tested
 
@@ -82,6 +84,7 @@ A rendered pass at 1440×900 and 390×844, in light and dark, covered the landin
 - **Every page and interaction.** Four representative pages were rendered at both widths and themes. The production Pagefind search returned five results for “Dijkstra” and Escape closed it. A click-through of all 27 pages and keyboard-only navigation was not exhaustive.
 - **External links, checked once.** All 28 external URLs returned 200 on 2026-11-23. They can change later.
 - **A custom domain.** GitHub Pages provides the URL above; no CNAME is configured.
+- **Remaining upstream polish.** Dark syntax tokens and some muted text are below APCA's preferred level while still passing WCAG; inline code can break at a hyphen; the terminal title bar has no visible title; sidebar rows are 32px (above the 24px WCAG floor, below the 44px comfort guideline); Starlight uses `<a role="tab">` rather than a button.
 
 ## Zed Flatpak
 
