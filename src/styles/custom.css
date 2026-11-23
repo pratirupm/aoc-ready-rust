@@ -252,15 +252,15 @@ h1 {
 	color: var(--sl-color-accent);
 }
 
-.sl-menu-button:focus-visible {
+.sl-menu-button:focus-visible:not(:has(~ :popover-open)) {
 	background-color: transparent;
 	outline: 2px solid var(--sl-color-accent);
 	outline-offset: 2px;
 }
 
 .sl-menu-button:has(~ :popover-open) {
-	background-color: var(--sl-color-gray-5);
-	color: var(--sl-color-white);
+	background-color: transparent;
+	color: var(--sl-color-accent);
 	box-shadow: none;
 }
 
@@ -274,8 +274,8 @@ h1 {
 }
 
 :root[data-theme='light'] .sl-menu-button:has(~ :popover-open) {
-	background-color: var(--sl-color-gray-5);
-	color: var(--sl-color-black);
+	background-color: transparent;
+	color: var(--sl-color-accent);
 }
 
 /* Touch targets: 24px is the WCAG floor, but 44px is the comfortable size. */
